@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator CF Ayam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f1de;
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #e07a5f;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #3d405b;
+            border-radius: 5px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #e07a5f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #d66a50;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #3d405b;
+        }
+        .chicken-emoji {
+            font-size: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #e07a5f;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chicken-emoji">🐔</div>
+        <h2>Kalkulator CF Ayam</h2>
+        
+        <label for="kg">Masukkan KG yang diinginkan:</label>
+        <input type="number" id="kg" value="100"><br>
+        
+        <label for="harga">Harga per KG (RM):</label>
+        <input type="number" id="harga" value="6" step="0.01"><br>
+        
+        <label for="untung">Untung per KG (RM) (1 pusingan):</label>
+        <input type="number" id="untung" value="0.9" step="0.01"><br>
+        
+        <label for="pusingan">Bilangan Pusingan:</label>
+        <input type="number" id="pusingan" value="12"><br>
+        
+        <label for="hari">Tempoh per Pusingan (hari):</label>
+        <input type="number" id="hari" value="45" step="1"><br>
+        
+        <button onclick="kiraPelaburan()">Kira</button>
+        
+        <div class="result" id="output"></div>
+    </div>
+
+    <script>
+        function kiraPelaburan() {
+            let kg = parseFloat(document.getElementById("kg").value);
+            let hargaPerKg = parseFloat(document.getElementById("harga").value);
+            let untungPerKg = parseFloat(document.getElementById("untung").value);
+            let pusingan = parseFloat(document.getElementById("pusingan").value);
+            let hari = parseFloat(document.getElementById("hari").value);
+            
+            // Pengiraan asas
+            let jumlahPelaburan = kg * hargaPerKg;
+            let untungSatu = kg * untungPerKg;
+            let untungTotal = untungSatu * pusingan;
+            let jumlahHari = hari * pusingan;
+            
+            // Pengiraan jumlah modal + untung sebenar
+            let totalOutcome = jumlahPelaburan + untungTotal;
+            
+            // Paparan keputusan dalam bentuk table
+            document.getElementById("output").innerHTML = `
+                <table>
+                    <tr>
+                        <th>Perkara</th>
+                        <th>Nilai</th>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Pelaburan (Modal)</td>
+                        <td>RM ${jumlahPelaburan.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Untung dalam 1 Pusingan</td>
+                        <td>RM ${untungSatu.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Untung dalam ${pusingan} Pusingan</td>
+                        <td>RM ${untungTotal.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Modal & Untung Selepas ${pusingan} Pusingan</td>
+                        <td>RM ${totalOutcome.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Tempoh Kontrak</td>
+                        <td>${jumlahHari} hari</td>
+                    </tr>
+                </table>
+                <br>
+                <em>Nota: Modal sebanyak RM ${jumlahPelaburan.toFixed(2)} akan dikembalikan selepas ${pusingan} pusingan.</em>
+            `;
+        }
+    </script>
+</body>
+</html>
